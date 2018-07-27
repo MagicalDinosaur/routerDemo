@@ -12,26 +12,25 @@
     <p>
         <span id="coord">5</span> on the line.</p>
     <p>
-        <a href="#" onclick="go(1); return false;">Advance to 6</a>
-        <a onclick="go(-1); return false;">retreat to 4</a>
+        <a href="?x=6" onclick="go(1); return false;">Advance to 6</a> or
+        <a href="?x=4" onclick="go(-1); return false;">retreat to 4</a>
     </p>
-
 </body>
 <script>
     var currentPage = 5; // prefilled by server！！！！
     function go(d) {
-        // setupPage(currentPage + d);
-        // history.pushState(currentPage, document.title, '/' + currentPage);
-        window.history.pushState(null, null, "/name/orange");
+        setupPage(currentPage + d);
+        history.pushState(currentPage, document.title, '?x=' + currentPage);
     }
     // 监听浏览器返回前进事件
     onpopstate = function (event) {
-        // setupPage(event.state);
+        console.log(event);
+        setupPage(event.state);
     }
 
     function setupPage(page) {
         currentPage = page;
-        // document.title = 'Line Game - ' + currentPage;
+        document.title = 'Line Game - ' + currentPage;
         document.getElementById('coord').textContent = currentPage;
         document.links[0].href = '?x=' + (currentPage + 1);
         document.links[0].textContent = 'Advance to ' + (currentPage + 1);
